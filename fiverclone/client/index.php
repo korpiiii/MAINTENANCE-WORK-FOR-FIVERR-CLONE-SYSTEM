@@ -1,4 +1,22 @@
 <?php require_once 'classloader.php'; ?>
+<?php
+// Assume $offer_id is the current offer's ID and $client_id is the logged-in client's ID
+
+// Query the database
+$sql = "SELECT COUNT(*) FROM proposals WHERE offer_id = ? AND client_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$offer_id, $client_id]);
+$count = $stmt->fetchColumn();
+
+if ($count > 0) {
+    // Proposal already exists
+    echo "<div class='alert alert-danger'>You have already submitted an offer to this proposal.</div>";
+    // Optionally, hide or disable the form
+} else {
+    // Show the proposal form as normal
+    // ... (your form code here)
+}
+?>
 <?php 
 if (!$userObj->isLoggedIn()) {
   header("Location: login.php");
